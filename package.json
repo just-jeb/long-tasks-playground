@@ -6,10 +6,10 @@
   "scripts": {
     "serve:prod": "webpack serve --mode production",
     "serve": "webpack serve --mode development",
-    "build": "yarn clean && webpack --mode production",
+    "build": "yarn clean && webpack --mode production && cp ./index.html dist/",
     "build:dev": "yarn clean && webpack --mode development",
     "clean-generated": "rm src/generated/* && rm src/generated-async/*",
-    "generate": "clean-generated && node generate-source-code.js && node generate-source-code-async.js",
+    "generate": "yarn clean-generated && node generate-source-code.js && node generate-source-code-async.js",
     "clean": "rm -rf dist"
   },
   "keywords": [],
