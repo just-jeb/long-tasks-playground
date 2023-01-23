@@ -1,0 +1,26 @@
+{
+  "name": "long-tasks-playground",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "serve:prod": "webpack serve --mode production",
+    "serve": "webpack serve --mode development",
+    "build": "yarn clean && webpack --mode production",
+    "build:dev": "yarn clean && webpack --mode development",
+    "clean-generated": "rm src/generated/* && rm src/generated-async/*",
+    "generate": "clean-generated && node generate-source-code.js && node generate-source-code-async.js",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [],
+  "author": "Jeb Barabanov",
+  "license": "ISC",
+  "devDependencies": {
+    "html-webpack-plugin": "^5.5.0",
+    "webpack": "^5.75.0",
+    "webpack-bundle-analyzer": "^4.7.0",
+    "webpack-cli": "^5.0.1",
+    "webpack-dev-server": "^4.11.1"
+  },
+  "dependencies": {}
+}
