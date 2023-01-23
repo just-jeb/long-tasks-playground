@@ -3,13 +3,9 @@ const crypto = require("crypto");
 
 // Adjust the number of files to be generated
 const numberOfFiles = 30;
+const fileSize = 50 * 1024 /* 50kb */;
 
-// Generate arbitrary content of approximately 20 KB
-const content = crypto.randomBytes(50000).toString("hex");
-
-
-
-const generateRandomJsonFile = (fileName, jsonSize = 50 * 1024 /* 50kb */, keySize=8, valueSize=16) => {
+const generateRandomJsonFile = (fileName, jsonSize = fileSize, keySize=8, valueSize=16) => {
     const entriesCount = jsonSize/(keySize + valueSize);
     const json = {};
     for (let i = 0; i < entriesCount; i++) {
