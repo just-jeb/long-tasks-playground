@@ -11,6 +11,7 @@ module.exports = [
       new HtmlWebpackPlugin()
     ],
     optimization: {
+      minimize: false,
       chunkIds: "named",
       runtimeChunk: 'single',
     },
@@ -24,6 +25,7 @@ module.exports = [
       new HtmlWebpackPlugin()
     ],
     optimization: {
+      minimize: false,
       chunkIds: "named",
       splitChunks: {
         chunks: 'all',
@@ -41,6 +43,7 @@ module.exports = [
       new HtmlWebpackPlugin()
     ],
     optimization: {
+      minimize: false,
       chunkIds: "named",
       runtimeChunk: 'single',
     },
@@ -54,6 +57,7 @@ module.exports = [
       new HtmlWebpackPlugin()
     ],
     optimization: {
+      minimize: false,
       chunkIds: "named",
       splitChunks: {
         chunks: 'all',
