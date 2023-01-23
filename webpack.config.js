@@ -3,7 +3,7 @@ const path = require('path');
 
 module.exports = [
   {
-    entry: './src/index.js',
+    entry: './src/index-sync.js',
     output: {
       path: path.resolve(__dirname, 'dist/single-sync'),
     },
@@ -11,11 +11,12 @@ module.exports = [
       new HtmlWebpackPlugin()
     ],
     optimization: {
+      chunkIds: "named",
       runtimeChunk: 'single',
     },
   },
   {
-    entry: './src/index.js',
+    entry: './src/index-sync.js',
     output: {
       path: path.resolve(__dirname, 'dist/split-sync'),
     },
@@ -23,6 +24,7 @@ module.exports = [
       new HtmlWebpackPlugin()
     ],
     optimization: {
+      chunkIds: "named",
       splitChunks: {
         chunks: 'all',
         maxSize: 50000
@@ -39,6 +41,24 @@ module.exports = [
       new HtmlWebpackPlugin()
     ],
     optimization: {
+      chunkIds: "named",
+      runtimeChunk: 'single',
+    },
+  },
+  {
+    entry: './src/index-sync-yield.js',
+    output: {
+      path: path.resolve(__dirname, 'dist/split-sync-yield'),
+    },
+    plugins: [
+      new HtmlWebpackPlugin()
+    ],
+    optimization: {
+      chunkIds: "named",
+      splitChunks: {
+        chunks: 'all',
+        maxSize: 50000
+      },
       runtimeChunk: 'single',
     },
   }];

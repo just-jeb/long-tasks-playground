@@ -8,8 +8,8 @@
     "serve": "webpack serve --mode development",
     "build": "yarn clean && webpack --mode production && cp ./index.html dist/",
     "build:dev": "yarn clean && webpack --mode development",
-    "clean-generated": "rm src/generated/* && rm src/generated-async/*",
-    "generate": "yarn clean-generated && node generate-source-code.js && node generate-source-code-async.js",
+    "clean-generated": "rm -f src/generated-data/* && rm -f src/generated-sync/* && rm -f src/generated-async/* && rm -f src/generated-sync-yield/*",
+    "generate": "yarn clean-generated && node generate-source-code.js",
     "clean": "rm -rf dist"
   },
   "keywords": [],
