@@ -1,7 +1,3 @@
-const el = document.createElement('div');
-el.innerText = 'Hello World';
-document.body.appendChild(el);
+import { data } from './generated-sync/file0.js';
 
-import('./generated-sync/file0.js').then(file => {
-    console.log(`That's the substring: ${file.data.substring(0, 100)}`);
-});
+console.log(`That's the substring: ${data.substring(0, 100)}`);

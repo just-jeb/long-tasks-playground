@@ -8,7 +8,9 @@ module.exports = [
       path: path.resolve(__dirname, 'dist/single-sync'),
     },
     plugins: [
-      new HtmlWebpackPlugin()
+      new HtmlWebpackPlugin({
+        template: 'src/index.ejs',
+      })
     ],
     optimization: {
       minimize: false,
@@ -22,7 +24,9 @@ module.exports = [
       path: path.resolve(__dirname, 'dist/split-sync'),
     },
     plugins: [
-      new HtmlWebpackPlugin()
+      new HtmlWebpackPlugin({
+        template: 'src/index.ejs',
+      })
     ],
     optimization: {
       minimize: false,
@@ -40,7 +44,9 @@ module.exports = [
       path: path.resolve(__dirname, 'dist/split-async'),
     },
     plugins: [
-      new HtmlWebpackPlugin()
+      new HtmlWebpackPlugin({
+        template: 'src/index.ejs',
+      })
     ],
     optimization: {
       minimize: false,
@@ -54,7 +60,9 @@ module.exports = [
       path: path.resolve(__dirname, 'dist/split-sync-yield'),
     },
     plugins: [
-      new HtmlWebpackPlugin()
+      new HtmlWebpackPlugin({
+        template: 'src/index.ejs',
+      })
     ],
     optimization: {
       minimize: false,
