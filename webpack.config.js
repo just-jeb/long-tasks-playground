@@ -9,7 +9,7 @@ module.exports = [
     },
     plugins: [
       new HtmlWebpackPlugin({
-        template: 'src/index.ejs',
+        template: 'src/templates/index.ejs',
       })
     ],
     optimization: {
@@ -25,7 +25,27 @@ module.exports = [
     },
     plugins: [
       new HtmlWebpackPlugin({
-        template: 'src/index.ejs',
+        template: 'src/templates/index.ejs',
+      })
+    ],
+    optimization: {
+      minimize: false,
+      chunkIds: "named",
+      splitChunks: {
+        chunks: 'all',
+        maxSize: 50000
+      },
+      runtimeChunk: 'single',
+    },
+  },
+  {
+    entry: './src/index-sync-yield.js',
+    output: {
+      path: path.resolve(__dirname, 'dist/split-sync-yield'),
+    },
+    plugins: [
+      new HtmlWebpackPlugin({
+        template: 'src/templates/index.ejs',
       })
     ],
     optimization: {
@@ -45,7 +65,7 @@ module.exports = [
     },
     plugins: [
       new HtmlWebpackPlugin({
-        template: 'src/index.ejs',
+        template: 'src/templates/index.ejs',
       })
     ],
     optimization: {
@@ -54,40 +74,20 @@ module.exports = [
       runtimeChunk: 'single',
     },
   },
-  // For later:
-  // {
-  //   entry: './src/index-async.js',
-  //   output: {
-  //     path: path.resolve(__dirname, 'dist/split-async'),
-  //   },
-  //   plugins: [
-  //     new HtmlWebpackPlugin({
-  //       template: 'src/index-preload.ejs',
-  //     })
-  //   ],
-  //   optimization: {
-  //     minimize: false,
-  //     chunkIds: "named",
-  //     runtimeChunk: 'single',
-  //   },
-  // },
   {
-    entry: './src/index-sync-yield.js',
+    entry: './src/index-async.js',
     output: {
-      path: path.resolve(__dirname, 'dist/split-sync-yield'),
+      path: path.resolve(__dirname, 'dist/split-async-preload'),
     },
     plugins: [
       new HtmlWebpackPlugin({
-        template: 'src/index.ejs',
+        template: 'src/templates/index-preload.ejs',
       })
     ],
     optimization: {
       minimize: false,
       chunkIds: "named",
-      splitChunks: {
-        chunks: 'all',
-        maxSize: 50000
-      },
       runtimeChunk: 'single',
     },
-  }];
+  },
+];
