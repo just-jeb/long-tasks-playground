@@ -19,7 +19,7 @@ const generateRandomJsonFile = (fileName, jsonSize = fileSize, keySize=8, valueS
 
 const generateSyncScript = (fileIndex, skipImport = false) => {
     let importLine = skipImport ? '' : `import * as nextFile from "./file${fileIndex + 1}.js"`;
-    let data = `export const data = content.toString().replace(/a/g, "b")`;
+    let data = `export const data = Object.values(content)[0]`;
     if (!skipImport) {
         data += '+ nextFile.data';
     }
@@ -32,8 +32,8 @@ const generateSyncScriptYield = (fileIndex, skipImport = false) => {
     let data = `export const data = ${nextFilePromise}
                     .then(nextFileData => {
                         setTimeout(() => { 
-                        const res = content.toString().replace(/a/g, "b") + nextFileData;
-                        resolve(res);
+                            const res = Object.values(content)[0] + nextFileData;
+                            resolve(res);
                         }, 0);
                     });`
     return `${importLine}\n${data}`;
@@ -41,7 +41,7 @@ const generateSyncScriptYield = (fileIndex, skipImport = false) => {
 
 const generateAsyncScript = (fileIndex, skipImport = false) => {
     let importLine = skipImport ? 'Promise.resolve({data: ""})' : `import(/* webpackPreload: true */ "./file${fileIndex + 1}.js")`;
-    let data = `export const data = ${importLine}.then(nextFile => content.toString().replace(/a/g, "b") + nextFile.data)`;
+    let data = `export const data = ${importLine}.then(nextFile => Object.values(content)[0] + nextFile.data)`;
     return data;
 }
 

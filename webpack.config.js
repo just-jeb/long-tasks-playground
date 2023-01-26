@@ -90,4 +90,20 @@ module.exports = [
       runtimeChunk: 'single',
     },
   },
+  {
+    entry: './src/index-function.js',
+    output: {
+      path: path.resolve(__dirname, 'dist/function'),
+    },
+    plugins: [
+      new HtmlWebpackPlugin({
+        template: 'src/templates/index.ejs',
+      })
+    ],
+    optimization: {
+      minimize: false,
+      chunkIds: "named",
+      runtimeChunk: 'single',
+    },
+  },
 ];

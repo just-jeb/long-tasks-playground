@@ -3,7 +3,7 @@ import * as nextFile from "./file8.js"
 export const data = nextFile.data
                     .then(nextFileData => {
                         setTimeout(() => { 
-                        const res = content.toString().replace(/a/g, "b") + nextFileData;
-                        resolve(res);
+                            const res = Object.values(content)[0] + nextFileData;
+                            resolve(res);
                         }, 0);
                     });
