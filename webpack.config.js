@@ -72,7 +72,8 @@ module.exports = [
       minimize: false,
       chunkIds: "named",
       splitChunks: {
-        chunks: 'all'
+        chunks: 'all',
+        maxSize: 50000
       },
       runtimeChunk: 'single',
     },
