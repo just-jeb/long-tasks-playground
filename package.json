@@ -9,7 +9,7 @@
     "build": "yarn clean && webpack --mode production && cp ./index.html dist/",
     "build:dev": "yarn clean && webpack --mode development",
     "clean-generated": "rm -f src/generated-data/* && rm -f src/generated-sync/* && rm -f src/generated-async/* && rm -f src/generated-sync-yield/*",
-    "generate": "yarn clean-generated && node generate-source-code.js",
+    "generate": "yarn clean-generated && node code-generation/generate-source-code.mjs",
     "clean": "rm -rf dist"
   },
   "keywords": [],
