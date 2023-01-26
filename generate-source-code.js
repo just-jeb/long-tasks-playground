@@ -5,7 +5,10 @@ const crypto = require("crypto");
 const numberOfFiles = 30;
 const fileSize = 50 * 1024 /* 50kb */;
 
-const generateRandomJsonFile = (fileName, jsonSize = fileSize, keySize=8, valueSize=16) => {
+const wrapInFunction = (data) => `export function content () { return ${data}; }`;
+const wrapInConst = (data) => `export const content = ${data}`;
+
+const generateRandomJsDataFile = ({fileName, jsonSize = fileSize, keySize=8, valueSize=16, functionize = false}) => {
     const entriesCount = jsonSize/(keySize + valueSize);
     const json = {};
     for (let i = 0; i < entriesCount; i++) {
@@ -13,36 +16,41 @@ const generateRandomJsonFile = (fileName, jsonSize = fileSize, keySize=8, valueS
         const value = crypto.randomBytes(valueSize).toString('hex');
         json[key] = value;
     }
-    
-    fs.writeFileSync(fileName, `export const content = ${JSON.stringify(json, null, 2)}`);
+
+    const data = JSON.stringify(json, null, 2);
+    let content = functionize ? wrapInFunction(data) : wrapInConst(data);
+    fs.writeFileSync(fileName, content);
 }
 
 const generateSyncScript = (fileIndex, skipImport = false) => {
+    const importData = `import { content } from "../generated-data/content${fileIndex}.js"`;
     let importLine = skipImport ? '' : `import * as nextFile from "./file${fileIndex + 1}.js"`;
     let data = `export const data = Object.values(content)[0]`;
     if (!skipImport) {
         data += '+ nextFile.data';
     }
-    return `${importLine}\n${data}`;
+    return `${importData}\n${importLine}\n${data}`;
 }
 
-const generateSyncScriptYield = (fileIndex, skipImport = false) => {
+const generateSyncScriptYield = ({functionize} = {functionize: false}) => (fileIndex, skipImport = false) => {
+    const importData = `import { content } from "../generated-data/content${functionize ? '-fn' : ''}${fileIndex}.js"`;
     let importLine = skipImport ? '' : `import * as nextFile from "./file${fileIndex + 1}.js"`;
     let nextFilePromise = skipImport ? 'Promise.resolve("")' : 'nextFile.data';
     let data = `export const data = ${nextFilePromise}
-                    .then(nextFileData => {
-                        setTimeout(() => { 
-                            const res = Object.values(content)[0] + nextFileData;
-                            resolve(res);
-                        }, 0);
-                    });`
-    return `${importLine}\n${data}`;
+                    .then(nextFileData => 
+                            new Promise(resolve => setTimeout(() => { 
+                                const res = Object.values(content${functionize ? '()' : ''})[0] + nextFileData;
+                                resolve(res);
+                            }, 0))
+                        );`
+    return `${importData}\n${importLine}\n${data}`;
 }
 
 const generateAsyncScript = (fileIndex, skipImport = false) => {
+    const importData = `import { content } from "../generated-data/content${fileIndex}.js"`;
     let importLine = skipImport ? 'Promise.resolve({data: ""})' : `import(/* webpackPreload: true */ "./file${fileIndex + 1}.js")`;
     let data = `export const data = ${importLine}.then(nextFile => Object.values(content)[0] + nextFile.data)`;
-    return data;
+    return `${importData}\n${data}`;
 }
 
 const generators = [{
@@ -54,20 +62,24 @@ const generators = [{
     folder: 'generated-async',
 },
 {
-    func: generateSyncScriptYield,
+    func: generateSyncScriptYield(),
     folder: 'generated-sync-yield',
+},
+{
+    func: generateSyncScriptYield({functionize: true}),
+    folder: 'generated-sync-yield-func',
 }];
 
 const generateScripts = (fileIndex, skipImport = false) => {
-    const importData = `import { content } from "../generated-data/content${fileIndex}.js"`;
     for(let generator of generators) {
         const scriptContent = generator.func(fileIndex, skipImport);
-        fs.writeFileSync(`src/${generator.folder}/file${fileIndex}.js`, `${importData}\n${scriptContent}\n`);
+        fs.writeFileSync(`src/${generator.folder}/file${fileIndex}.js`, `${scriptContent}\n`);
     }
 }
 
 for (let i = 0; i < numberOfFiles; i++) {
-    generateRandomJsonFile(`src/generated-data/content${i}.js`);
+    generateRandomJsDataFile({fileName: `src/generated-data/content${i}.js`});
+    generateRandomJsDataFile({fileName: `src/generated-data/content-fn${i}.js`, functionize: true});
     generateScripts(i, i == numberOfFiles - 1);
 }
 

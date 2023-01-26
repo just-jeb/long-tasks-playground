@@ -59,6 +59,25 @@ module.exports = [
     },
   },
   {
+    entry: './src/index-sync-yield-func.js',
+    output: {
+      path: path.resolve(__dirname, 'dist/split-sync-yield-func'),
+    },
+    plugins: [
+      new HtmlWebpackPlugin({
+        template: 'src/templates/index.ejs',
+      })
+    ],
+    optimization: {
+      minimize: false,
+      chunkIds: "named",
+      splitChunks: {
+        chunks: 'all'
+      },
+      runtimeChunk: 'single',
+    },
+  },
+  {
     entry: './src/index-async.js',
     output: {
       path: path.resolve(__dirname, 'dist/split-async'),
