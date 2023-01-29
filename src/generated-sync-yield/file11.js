@@ -1,9 +1,8 @@
 import { content } from "../generated-data/content11.js"
 import * as nextFile from "./file12.js"
+async function concatData(nextFileData) {
+        await new Promise(resolve => setTimeout(resolve, 0));
+        return Object.values(content)[0] + nextFileData;
+    }
 export const data = nextFile.data
-                    .then(nextFileData => 
-                            new Promise(resolve => setTimeout(() => { 
-                                const res = Object.values(content)[0] + nextFileData;
-                                resolve(res);
-                            }, 0))
-                        );
+        .then(concatData);

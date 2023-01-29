@@ -1,3 +1,7 @@
 import { content } from "../generated-data/content29.js"
 
-export const data = Object.values(content)[0]
+function concatData(nextFileData) {
+        return Object.values(content)[0] + nextFileData;
+    }
+    
+export const data = Object.values(content)[0];
