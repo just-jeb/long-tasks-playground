@@ -31,7 +31,7 @@ const generateSingleLargeScript = () => {
     let content = '';
     // Generate a lot of functions
     for(let i = 0; i < functionsAmount; i++) {
-        const func = `function func${i}() { console.log('func${i}'); }\n`;
+        const func = `  function func${i}() { console.log('func${i}'); }\n`;
         content += func;
     }
     // Enclose the functions in a function to avoid global declarations
