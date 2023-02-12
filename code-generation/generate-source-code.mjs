@@ -27,7 +27,7 @@ const generateScripts = (fileIndex, skipImport = false) => {
 }
 
 const generateSingleLargeScript = () => {
-    const functionsAmount = 100000;
+    const functionsAmount = 1000000;
     let content = '';
     // Generate a lot of functions
     for(let i = 0; i < functionsAmount; i++) {
