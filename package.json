@@ -6,11 +6,12 @@
   "scripts": {
     "serve:prod": "webpack serve --mode production",
     "serve": "webpack serve --mode development",
-    "build": "yarn clean && webpack --mode production && cp ./index.html dist/",
+    "build": "yarn clean && webpack --mode production && cp ./index.html dist/ && yarn copy-single",
     "build:dev": "yarn clean && webpack --mode development",
-    "clean-generated": "rm -f src/generated-data/* && rm -f src/generated-sync/* && rm -f src/generated-async/* && rm -f src/generated-sync-yield/*",
+    "clean-generated": "rm -f src/generated-data/* && rm -f src/generated-sync/* && rm -f src/generated-async/* && rm -f src/generated-sync-yield/* && rm -f src/generated-single-file/*",
     "generate": "yarn clean-generated && node code-generation/generate-source-code.mjs",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "copy-single": "mkdir ./dist/single-file && cp ./src/generated-single-file/* ./src/templates/index.html  ./dist/single-file"
   },
   "keywords": [],
   "author": "Jeb Barabanov",
