@@ -126,4 +126,20 @@ module.exports = [
       runtimeChunk: 'single',
     },
   },
+  {
+    entry: './src/index-loaf.js',
+    output: {
+      path: path.resolve(__dirname, 'dist/loaf'),
+    },
+    plugins: [
+      new HtmlWebpackPlugin({
+        template: 'src/templates/index.ejs',
+      })
+    ],
+    optimization: {
+      minimize: false,
+      chunkIds: "named",
+      runtimeChunk: 'single',
+    },
+  },
 ];
